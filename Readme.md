@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Анжела Ти](https://up.htmlacademy.ru/javascript/11/user/244632).
-* Наставник: `Неизвестно`.
+* Наставник: `Сергей Буртылёв`.
 
 ---
 

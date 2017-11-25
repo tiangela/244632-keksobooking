@@ -15,7 +15,7 @@ var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditio
 var types = ['flat', 'house', 'bungalo'];
 var checkins = ['12:00', '13:00', '14:00'];
 var checkouts = ['12:00', '13:00', '14:00'];
-var profilePhotos = generatePhotos(8);
+//var profilePhotos = generatePhotos(8);
 
 var x = null;
 var y = null;
@@ -27,18 +27,18 @@ for (var i = 0; i < 8; i++) {
   y = getRandomValue(100, 500);
   ads[i] = {
     'author': {
-      'avatar': profilePhotos[i]
+    //  'avatar': profilePhotos[i]
     },
     'offer': {
       'title': homeTypeNames[i],
       'address': x + ', ' + y,
       'price': getRandomValue(1000, 1000000),
-      'type': types[0],
+      'type': types[i],
       'rooms': getRandomValue(1, 5),
       'guests': getRandomValue(1, 10),
       'checkin': checkins[getRandomValue(0, checkins.length - 1)],
       'checkout': checkouts[getRandomValue(0, checkouts.length - 1)],
-      'features': getRandomArray(features),
+      'features': features,
       'description': '',
       'photos': []
     },
@@ -56,8 +56,8 @@ var drawButton = function(ad) {
   var buttonMap = document.createElement('button');
   var imgAvatar = document.createElement('img');
   buttonMap.className = 'map__pin';
-  buttonMap.style.left = ad.location.x;
-  buttonMap.style.top = ad.location.y;
+  buttonMap.style.left = ad.location.x + 'px';
+  buttonMap.style.top = ad.location.y + 'px';
   imgAvatar.src = ad.author.avatar;
   imgAvatar.style.width = '40px';
   imgAvatar.style.height = '40px';
@@ -66,5 +66,5 @@ var drawButton = function(ad) {
   fragment.appendChild(buttonMap);
   return buttonMap;
 };
+drawButton(ads[3]);
 blockPins.appendChild(fragment);
-drawButton(ads[i]);

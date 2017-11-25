@@ -15,7 +15,6 @@ var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditio
 var types = ['flat', 'house', 'bungalo'];
 var checkins = ['12:00', '13:00', '14:00'];
 var checkouts = ['12:00', '13:00', '14:00'];
-//var profilePhotos = generatePhotos(8);
 
 var x = null;
 var y = null;
@@ -27,7 +26,7 @@ for (var i = 0; i < 8; i++) {
   y = getRandomValue(100, 500);
   ads[i] = {
     'author': {
-    //  'avatar': profilePhotos[i]
+      'avatar': 'img/avatars/user0' +  (i + 1) + '.png'
     },
     'offer': {
       'title': homeTypeNames[i],
@@ -49,8 +48,7 @@ for (var i = 0; i < 8; i++) {
   };
 }
 
-var blockPins = document.querySelector('.map__pins');
-var fragment = document.createDocumentFragment();
+
 
 var drawButton = function(ad) {
   var buttonMap = document.createElement('button');
@@ -63,8 +61,17 @@ var drawButton = function(ad) {
   imgAvatar.style.height = '40px';
   imgAvatar.draggable = 'false';
   buttonMap.appendChild(imgAvatar);
-  fragment.appendChild(buttonMap);
   return buttonMap;
 };
-drawButton(ads[3]);
-blockPins.appendChild(fragment);
+
+var fillMap = function () {
+  var blockPins = document.querySelector('.map__pins');
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < ads.length; i++) {
+    fragment.appendChild(drawButton(ads[i]));
+  }
+  blockPins.appendChild(fragment);
+};
+
+fillMap();
+drawButton(ads[i]);

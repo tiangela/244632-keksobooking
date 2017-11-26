@@ -16,12 +16,19 @@ var types = ['flat', 'house', 'bungalo'];
 var checkins = ['12:00', '13:00', '14:00'];
 var checkouts = ['12:00', '13:00', '14:00'];
 
-var x = null;
-var y = null;
-var getRandomValue = function(minRandom, maxRandom) {
-  return Math.random() * (maxRandom - minRandom) + minRandom;
+var getRandomValue = function (minRandom, maxRandom) {
+  return Math.round(Math.random() * (maxRandom - minRandom) + minRandom);
 };
 
+var getRandomArray = function (arr) {
+  var copiedArray = arr.slice();
+  var randomLength = getRandomValue(0, arr.length);
+  copiedArray.length = randomLength;
+  return copiedArray;
+};
+
+var x = null;
+var y = null;
 for (var i = 0; i < 8; i++) {
   x = getRandomValue(300, 900);
   y = getRandomValue(100, 500);
@@ -38,7 +45,7 @@ for (var i = 0; i < 8; i++) {
       'guests': getRandomValue(1, 10),
       'checkin': checkins[getRandomValue(0, checkins.length - 1)],
       'checkout': checkouts[getRandomValue(0, checkouts.length - 1)],
-      'features': features,
+      'features': getRandomArray(features),
       'description': '',
       'photos': []
     },
@@ -75,28 +82,34 @@ var fillMap = function() {
 
 var renderPopup = function (object) {
   var mapBlock = document.querySelector('.map');
-  var mapFilter = document.querySelector('.map__filters-container')
+  var popupFeatures = document.querySelector('.popup__features');
   var similarAdsTemplate = document.querySelector('template').content;
   var adElement = similarAdsTemplate.cloneNode(true);
-  var paragraphs = document.querySelectorAll('.map__card p');
-  var typeofDwelling = { // создала ключи-значения, но не знаю куда вставить и надо ли? может циклом for перебирать и подставлять?
+  var paragraphs = adElement.querySelectorAll('.map__card p');
+  var typeofDwelling = {
     'flat': 'Квартира',
     'house': 'Дом',
     'bungalo': 'Бунгало'
   };
-  var list =  document.createElement('li');
-  var fragment = document.createDocumentFragment();
-  fragment.appendChild('li');
   adElement.querySelector('h3').textContent = object.offer.title;
-  adElement.querySelector(paragraphs[0]).textContent = object.offer.address;
+  paragraphs[0].textContent = object.offer.address;
   adElement.querySelector('.popup__price').textContent = object.offer.price + '&#x20bd;/ночь';
-  adElement.querySelector('h4').textContent = object.offer.type; // тут какая-то фигня
-  adElement.querySelector('li').classList.add('feature feature--' + object.offer.features[i]);
-  adElement.querySelector(paragraphs[2]).textContent = object.offer.rooms + 'для ' + object.offer.guests + 'гостей';
-  adElement.querySelector(paragraphs[3]).textContent = 'Заезд после' + object.offer.checkin + ',' + ' выезд до ' + object.offer.checkout;
-  adElement.querySelector(paragraphs[4]).textContent = object.offer.description;
+  adElement.querySelector('h4').textContent = typeofDwelling[object.offer.type];
+  paragraphs[2].textContent = object.offer.rooms + 'для ' + object.offer.guests + 'гостей';
+  paragraphs[3].textContent = 'Заезд после' + object.offer.checkin + ',' + ' выезд до ' + object.offer.checkout;
+  paragraphs[4].textContent = object.offer.description;
   adElement.querySelector('.popup__avatar').src = object.author.avatar;
-  mapFilter.insertAdjacentHTML('beforeBegin', adElement);
+  var createFeaturesElement = function () {
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < object.offer.features.length; i++) {
+      var list = document.createElement('li');
+      list.className = 'feature feature--' + object.offer.features[i];
+      fragment.appendChild(list);
+      popupFeatures.appendChild(fragment);
+    }
+  };
+  createFeaturesElement();
+  mapBlock.appendChild(adElement);
 };
 
 fillMap();

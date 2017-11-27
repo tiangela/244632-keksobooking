@@ -40,7 +40,7 @@ for (var i = 0; i < 8; i++) {
       'title': homeTypeNames[i],
       'address': x + ', ' + y,
       'price': getRandomValue(1000, 1000000),
-      'type': types[i],
+      'type': types[getRandomValue(0, types.length - 1)],
       'rooms': getRandomValue(1, 5),
       'guests': getRandomValue(1, 10),
       'checkin': checkins[getRandomValue(0, checkins.length - 1)],
@@ -115,5 +115,4 @@ var createFeaturesElement = function (facility, popupFeatures) {
 };
 
 fillMap();
-renderPopup(ads[0]);
-drawButton(ads[0]);
+renderPopup(ads[getRandomValue(0, ads.length - 1)]);

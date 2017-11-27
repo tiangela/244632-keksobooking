@@ -16,11 +16,11 @@ var types = ['flat', 'house', 'bungalo'];
 var checkins = ['12:00', '13:00', '14:00'];
 var checkouts = ['12:00', '13:00', '14:00'];
 
-var getRandomValue = function(minRandom, maxRandom) {
+var getRandomValue = function (minRandom, maxRandom) {
   return Math.round(Math.random() * (maxRandom - minRandom) + minRandom);
 };
 
-var getRandomArray = function(arr) {
+var getRandomArray = function (arr) {
   var copiedArray = arr.slice();
   var randomLength = getRandomValue(0, arr.length);
   copiedArray.length = randomLength;
@@ -56,7 +56,7 @@ for (var i = 0; i < 8; i++) {
   };
 }
 
-var drawButton = function(ad) {
+var drawButton = function (ad) {
   var pinSize = 46;
   var buttonMap = document.createElement('button');
   var imgAvatar = document.createElement('img');
@@ -71,16 +71,16 @@ var drawButton = function(ad) {
   return buttonMap;
 };
 
-var fillMap = function() {
+var fillMap = function () {
   var blockPins = document.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < ads.length; i++) {
-    fragment.appendChild(drawButton(ads[i]));
+  for (var j = 0; j < ads.length; j++) {
+    fragment.appendChild(drawButton(ads[j]));
   }
   blockPins.appendChild(fragment);
 };
 
-var renderPopup = function(object) {
+var renderPopup = function (object) {
   var mapBlock = document.querySelector('.map');
   var similarAdsTemplate = document.querySelector('template').content;
   var adElement = similarAdsTemplate.cloneNode(true);
@@ -103,12 +103,12 @@ var renderPopup = function(object) {
   mapBlock.appendChild(adElement);
 };
 
-var createFeaturesElement = function(facility, popupFeatures) {
+var createFeaturesElement = function (facility, popupFeatures) {
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < facility.length; i++) {
-    popupFeatures.innerHtml = '';
+  popupFeatures.innerHTML = '';
+  for (var k = 0; k < facility.length; k++) {
     var list = document.createElement('li');
-    list.className = 'feature feature--' + facility[i];
+    list.className = 'feature feature--' + facility[k];
     fragment.appendChild(list);
   }
   popupFeatures.appendChild(fragment);

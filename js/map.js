@@ -16,11 +16,11 @@ var types = ['flat', 'house', 'bungalo'];
 var checkins = ['12:00', '13:00', '14:00'];
 var checkouts = ['12:00', '13:00', '14:00'];
 
-var getRandomValue = function (minRandom, maxRandom) {
+var getRandomValue = function(minRandom, maxRandom) {
   return Math.round(Math.random() * (maxRandom - minRandom) + minRandom);
 };
 
-var getRandomArray = function (arr) {
+var getRandomArray = function(arr) {
   var copiedArray = arr.slice();
   var randomLength = getRandomValue(0, arr.length);
   copiedArray.length = randomLength;
@@ -82,9 +82,9 @@ var fillMap = function() {
 
 var renderPopup = function (object) {
   var mapBlock = document.querySelector('.map');
-  var popupFeatures = document.querySelector('.popup__features');
   var similarAdsTemplate = document.querySelector('template').content;
   var adElement = similarAdsTemplate.cloneNode(true);
+  var popupFeatures = similarAdsTemplate.querySelector('.popup__features');
   var paragraphs = adElement.querySelectorAll('.map__card p');
   var typeofDwelling = {
     'flat': 'Квартира',
@@ -99,19 +99,20 @@ var renderPopup = function (object) {
   paragraphs[3].textContent = 'Заезд после' + object.offer.checkin + ',' + ' выезд до ' + object.offer.checkout;
   paragraphs[4].textContent = object.offer.description;
   adElement.querySelector('.popup__avatar').src = object.author.avatar;
-  var createFeaturesElement = function () {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < object.offer.features.length; i++) {
-      var list = document.createElement('li');
-      list.className = 'feature feature--' + object.offer.features[i];
-      fragment.appendChild(list);
-      popupFeatures.appendChild(fragment);
-    }
-  };
-  createFeaturesElement();
   mapBlock.appendChild(adElement);
+  createFeaturesElement();
+};
+
+var createFeaturesElement = function (object, popupFeatures) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < object.offer.features.length; i++) {
+    var list = document.createElement('li');
+    list.className = 'feature feature--' + object.offer.features[i];
+    fragment.appendChild(list);
+  }
+  popupFeatures.appendChild(fragment);
 };
 
 fillMap();
-renderPopup(ads[i]);
-drawButton(ads[i]);
+renderPopup(ads[0]);
+drawButton(ads[0]);

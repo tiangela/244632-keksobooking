@@ -105,10 +105,10 @@ var renderPopup = function(object) {
 
 var createFeaturesElement = function(facility, popupFeatures) {
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < features.length; i++) {
-    fragment.querySelector('ul').removeChild('li');
+  for (var i = 0; i < facility.length; i++) {
+    popupFeatures.innerHtml = '';
     var list = document.createElement('li');
-    list.className = 'feature feature--' + features[i];
+    list.className = 'feature feature--' + facility[i];
     fragment.appendChild(list);
   }
   popupFeatures.appendChild(fragment);

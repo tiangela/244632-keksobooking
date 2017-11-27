@@ -80,11 +80,11 @@ var fillMap = function() {
   blockPins.appendChild(fragment);
 };
 
-var renderPopup = function (object) {
+var renderPopup = function(object) {
   var mapBlock = document.querySelector('.map');
   var similarAdsTemplate = document.querySelector('template').content;
   var adElement = similarAdsTemplate.cloneNode(true);
-  var popupFeatures = similarAdsTemplate.querySelector('.popup__features');
+  var popupFeatures = adElement.querySelector('.popup__features');
   var paragraphs = adElement.querySelectorAll('.map__card p');
   var typeofDwelling = {
     'flat': 'Квартира',
@@ -93,21 +93,22 @@ var renderPopup = function (object) {
   };
   adElement.querySelector('h3').textContent = object.offer.title;
   paragraphs[0].textContent = object.offer.address;
-  adElement.querySelector('.popup__price').textContent = object.offer.price + '&#x20bd;/ночь';
+  adElement.querySelector('.popup__price').innerHTML = object.offer.price + '&#x20bd;/ночь';
   adElement.querySelector('h4').textContent = typeofDwelling[object.offer.type];
-  paragraphs[2].textContent = object.offer.rooms + 'для ' + object.offer.guests + 'гостей';
+  paragraphs[2].textContent = object.offer.rooms + ' для ' + object.offer.guests + ' гостей';
   paragraphs[3].textContent = 'Заезд после' + object.offer.checkin + ',' + ' выезд до ' + object.offer.checkout;
   paragraphs[4].textContent = object.offer.description;
   adElement.querySelector('.popup__avatar').src = object.author.avatar;
+  createFeaturesElement(object.offer.features, popupFeatures);
   mapBlock.appendChild(adElement);
-  createFeaturesElement();
 };
 
-var createFeaturesElement = function (object, popupFeatures) {
+var createFeaturesElement = function(facility, popupFeatures) {
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < object.offer.features.length; i++) {
+  for (var i = 0; i < features.length; i++) {
+    fragment.querySelector('ul').removeChild('li');
     var list = document.createElement('li');
-    list.className = 'feature feature--' + object.offer.features[i];
+    list.className = 'feature feature--' + features[i];
     fragment.appendChild(list);
   }
   popupFeatures.appendChild(fragment);

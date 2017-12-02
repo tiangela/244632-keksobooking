@@ -15,10 +15,15 @@ var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditio
 var types = ['flat', 'house', 'bungalo'];
 var checkins = ['12:00', '13:00', '14:00'];
 var checkouts = ['12:00', '13:00', '14:00'];
-
+var map = document.querySelector('.map');
+var activePin = null;
+var currentPopup = null;
 var getRandomValue = function (minRandom, maxRandom) {
   return Math.round(Math.random() * (maxRandom - minRandom) + minRandom);
 };
+var pinMain = map.querySelector('.map__pin--main');
+var notice = document.querySelector('.notice');
+var fieldset = document.querySelector('fieldset');
 
 var getRandomArray = function (arr) {
   var copiedArray = arr.slice();
@@ -33,6 +38,7 @@ for (var i = 0; i < 8; i++) {
   x = getRandomValue(300, 900);
   y = getRandomValue(100, 500);
   ads[i] = {
+    'id': i,
     'author': {
       'avatar': 'img/avatars/user0' + (i + 1) + '.png'
     },
@@ -56,14 +62,15 @@ for (var i = 0; i < 8; i++) {
   };
 }
 
-var drawButton = function (ad) {
+var drawButton = function (pin) {
   var pinSize = 46;
   var buttonMap = document.createElement('button');
   var imgAvatar = document.createElement('img');
+  buttonMap.setAttribute('data-id', pin.id);
   buttonMap.className = 'map__pin';
-  buttonMap.style.left = ad.location.x + 'px';
-  buttonMap.style.top = (ad.location.y - (pinSize + 18) / 2) + 'px';
-  imgAvatar.src = ad.author.avatar;
+  buttonMap.style.left = pin.location.x + 'px';
+  buttonMap.style.top = (pin.location.y - (pinSize + 18) / 2) + 'px';
+  imgAvatar.src = pin.author.avatar;
   imgAvatar.style.width = '40px';
   imgAvatar.style.height = '40px';
   imgAvatar.draggable = 'false';
@@ -80,8 +87,18 @@ var fillMap = function () {
   blockPins.appendChild(fragment);
 };
 
-var renderPopup = function (object) {
-  var mapBlock = document.querySelector('.map');
+var createFeaturesElement = function (facility, popupFeatures) {
+  var fragment = document.createDocumentFragment();
+  popupFeatures.innerHTML = '';
+  for (var k = 0; k < facility.length; k++) {
+    var list = document.createElement('li');
+    list.className = 'feature feature--' + facility[k];
+    fragment.appendChild(list);
+  }
+  popupFeatures.appendChild(fragment);
+};
+
+var createPopup = function (object) {
   var similarAdsTemplate = document.querySelector('template').content;
   var adElement = similarAdsTemplate.cloneNode(true);
   var popupFeatures = adElement.querySelector('.popup__features');
@@ -100,19 +117,59 @@ var renderPopup = function (object) {
   paragraphs[4].textContent = object.offer.description;
   adElement.querySelector('.popup__avatar').src = object.author.avatar;
   createFeaturesElement(object.offer.features, popupFeatures);
-  mapBlock.appendChild(adElement);
+  return adElement.querySelector('.map__card');
 };
 
-var createFeaturesElement = function (facility, popupFeatures) {
-  var fragment = document.createDocumentFragment();
-  popupFeatures.innerHTML = '';
-  for (var k = 0; k < facility.length; k++) {
-    var list = document.createElement('li');
-    list.className = 'feature feature--' + facility[k];
-    fragment.appendChild(list);
+var showPopup = function (view) {
+  var popup = createPopup(view);
+  if (currentPopup) {
+    map.removeChild(currentPopup);
   }
-  popupFeatures.appendChild(fragment);
+  currentPopup = popup;
+  map.appendChild(popup);
+  var popupClose = currentPopup.querySelector('.popup__close');
+  popupClose.addEventListener('click', onCloseClick);
 };
 
-fillMap();
-renderPopup(ads[getRandomValue(0, ads.length - 1)]);
+var closePopup = function () {
+  map.removeChild(currentPopup);
+  currentPopup = null;
+};
+
+var onPinMouseup = function () {
+  map.classList.remove('map--faded');
+  notice.classList.remove('notice__form--disabled');
+  fieldset.classList.remove('disabled');
+  fillMap();
+  var pins = map.querySelectorAll('.map__pin:not(.map__pin--main)');
+  for (var l = 0; l < pins.length; l++) {
+    pins[l].addEventListener('click', onPinClick);
+  }
+  map.addEventListener('keydown', onButtonClose);
+  pinMain.removeEventListener('mouseup', onPinMouseup);
+};
+
+var onButtonClose = function (event) {
+  if (event.keyCode === 27) {
+    activePin.classList.remove('map__pin--active');
+    closePopup();
+  }
+};
+
+var onPinClick = function (evn) {
+  var target = evn.currentTarget;
+  var idPin = target.dataset.id;
+  if (activePin) {
+    activePin.classList.remove('map__pin--active');
+  }
+  activePin = target;
+  activePin.classList.add('map__pin--active');
+  showPopup(ads[idPin]);
+};
+
+var onCloseClick = function () {
+  activePin.classList.remove('map__pin--active');
+  closePopup();
+};
+
+pinMain.addEventListener('mouseup', onPinMouseup);

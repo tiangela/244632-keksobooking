@@ -95,7 +95,7 @@ var createFeaturesElement = function (facility, popupFeatures) {
   popupFeatures.appendChild(fragment);
 };
 
-var renderPopup = function (object) {
+var createPopup = function (object) {
   var similarAdsTemplate = document.querySelector('template').content;
   var adElement = similarAdsTemplate.cloneNode(true);
   var popupFeatures = adElement.querySelector('.popup__features');
@@ -118,14 +118,14 @@ var renderPopup = function (object) {
 };
 
 var showPopup = function (view) {
-  var popup = renderPopup(view);
+  var popup = createPopup(view);
   if (currentPopup) {
     map.removeChild(currentPopup);
   }
   currentPopup = popup;
   map.appendChild(popup);
   var popupClose = currentPopup.querySelector('.popup__close');
-  popupClose.addEventListener ('click', onCloseClick);
+  popupClose.addEventListener('click', onCloseClick);
 };
 
 var pinMain = map.querySelector('.map__pin--main');
@@ -141,13 +141,20 @@ var onPinMouseup = function () {
   for (var l = 0; l < pins.length; l++) {
     pins[l].addEventListener('click', onPinClick);
   }
+  map.addEventListener('keydown', function (event) {
+    if (event.keyCode === 27) {
+      activePin.classList.remove('map__pin--active');
+      map.removeChild(currentPopup);
+      currentPopup = null;
+    }
+  });
   pinMain.removeEventListener('mouseup', onPinMouseup);
 };
 
 var onPinClick = function (evn) {
-  var target = evn.currentTarget; // элемент, на котором повесили событие.
+  var target = evn.currentTarget;
   var idPin = target.dataset.id;
-  if (activePin) { // проверяем null или нет
+  if (activePin) {
     activePin.classList.remove('map__pin--active');
   }
   activePin = target;

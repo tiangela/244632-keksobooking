@@ -23,7 +23,7 @@ var getRandomValue = function (minRandom, maxRandom) {
 };
 var pinMain = map.querySelector('.map__pin--main');
 var notice = document.querySelector('.notice');
-var fieldset = document.querySelector('fieldset');
+var fieldset = document.querySelectorAll('fieldset');
 
 var getRandomArray = function (arr) {
   var copiedArray = arr.slice();
@@ -139,7 +139,9 @@ var closePopup = function () {
 var onPinMouseup = function () {
   map.classList.remove('map--faded');
   notice.classList.remove('notice__form--disabled');
-  fieldset.classList.remove('disabled');
+  for (var t = 0; t < fieldset.length; t++) {
+    fieldset[t].classList.remove('disabled');
+  }
   fillMap();
   var pins = map.querySelectorAll('.map__pin:not(.map__pin--main)');
   for (var l = 0; l < pins.length; l++) {
@@ -173,3 +175,15 @@ var onCloseClick = function () {
 };
 
 pinMain.addEventListener('mouseup', onPinMouseup);
+
+// задание о валидации
+var timeIn = document.querySelector('#timein');
+var timeOut = document.querySelector('#timeout');
+
+var onTimeinChange = function (evn) {
+  var timeInChoice = evn.Currentarget;
+  timeOut.option.value = timeInChoice.option.value;
+};
+
+timeIn.addEventListener('change', onTimeinChange);
+//timeOut.addEventListener('change', onTimeChange);

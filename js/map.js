@@ -21,6 +21,9 @@ var currentPopup = null;
 var getRandomValue = function (minRandom, maxRandom) {
   return Math.round(Math.random() * (maxRandom - minRandom) + minRandom);
 };
+var pinMain = map.querySelector('.map__pin--main');
+var notice = document.querySelector('.notice');
+var fieldset = document.querySelector('fieldset');
 
 var getRandomArray = function (arr) {
   var copiedArray = arr.slice();
@@ -128,9 +131,10 @@ var showPopup = function (view) {
   popupClose.addEventListener('click', onCloseClick);
 };
 
-var pinMain = map.querySelector('.map__pin--main');
-var notice = document.querySelector('.notice');
-var fieldset = document.querySelector('fieldset');
+var closePopup = function () {
+  map.removeChild(currentPopup);
+  currentPopup = null;
+};
 
 var onPinMouseup = function () {
   map.classList.remove('map--faded');
@@ -141,14 +145,15 @@ var onPinMouseup = function () {
   for (var l = 0; l < pins.length; l++) {
     pins[l].addEventListener('click', onPinClick);
   }
-  map.addEventListener('keydown', function (event) {
-    if (event.keyCode === 27) {
-      activePin.classList.remove('map__pin--active');
-      map.removeChild(currentPopup);
-      currentPopup = null;
-    }
-  });
+  map.addEventListener('keydown', onButtonClose);
   pinMain.removeEventListener('mouseup', onPinMouseup);
+};
+
+var onButtonClose = function (event) {
+  if (event.keyCode === 27) {
+    activePin.classList.remove('map__pin--active');
+    closePopup();
+  }
 };
 
 var onPinClick = function (evn) {
@@ -163,8 +168,8 @@ var onPinClick = function (evn) {
 };
 
 var onCloseClick = function () {
-  map.removeChild(currentPopup);
-  currentPopup = null;
+  activePin.classList.remove('map__pin--active');
+  closePopup();
 };
 
 pinMain.addEventListener('mouseup', onPinMouseup);

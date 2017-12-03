@@ -180,10 +180,32 @@ pinMain.addEventListener('mouseup', onPinMouseup);
 var timeIn = document.querySelector('#timein');
 var timeOut = document.querySelector('#timeout');
 
+
+
 var onTimeinChange = function (evn) {
-  var timeInChoice = evn.Currentarget;
-  timeOut.option.value = timeInChoice.option.value;
+  var timeInChoice = evn.currentTarget;
+  timeOut.value = timeInChoice.value;
 };
 
+var onTimeoutChange = function (evn) {
+  var timeOutChoice = evn.currentTarget;
+  timeIn.value = timeOutChoice.value;
+};
+
+var minPriceTypes = {
+  'bungalo': 0,
+  'flat': 1000,
+  'house': 5000,
+  'palace': 10000
+};
+
+var typeElement = document.querySelector('#type');
+var price = document.querySelector('#price');
+var onTypeChange = function (evn) {
+  console.log(evn.currentTarget);
+  price.min = minPriceTypes[evn.currentTarget];
+  };
+onTypeChange();
+//typeElement.addEventListener('change', onTypeChange);
 timeIn.addEventListener('change', onTimeinChange);
-//timeOut.addEventListener('change', onTimeChange);
+timeOut.addEventListener('change', onTimeoutChange);

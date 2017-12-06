@@ -32,6 +32,7 @@ var getRandomArray = function (arr) {
   return copiedArray;
 };
 
+
 var x = null;
 var y = null;
 for (var i = 0; i < 8; i++) {
@@ -176,7 +177,7 @@ var onCloseClick = function () {
 
 pinMain.addEventListener('mouseup', onPinMouseup);
 
-// задание о валидации
+/*// задание о валидации
 var timeIn = document.querySelector('#timein');
 var timeOut = document.querySelector('#timeout');
 var typeElement = document.querySelector('#type'); // валидация
@@ -186,7 +187,6 @@ var price = document.querySelector('#price');
 var roomNumber = document.querySelector('#room_number');
 var capacity = document.querySelector('#capacity');
 var buttonSubmit = document.querySelector('.form__submit');
-var input = document.querySelectorAll('input');
 
 var minPriceTypes = {
   'bungalo': 0,
@@ -262,4 +262,4 @@ roomNumber.addEventListener('change', onRoomChange);
 buttonSubmit.addEventListener('click', onButtonError);
 typeElement.addEventListener('change', onTypeChange);
 timeIn.addEventListener('change', onTimeinChange);
-timeOut.addEventListener('change', onTimeoutChange);
+timeOut.addEventListener('change', onTimeoutChange); */

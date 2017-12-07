@@ -34,23 +34,25 @@
     return adElement.querySelector('.map__card');
   };
 
-  var showPopup = function (view) {
-    var popup = createPopup(view);
+  var showPopup = function (object, container) {
+    var popup = createPopup(object);
     if (currentPopup) {
-      window.map.map.removeChild(currentPopup);
+      container.removeChild(currentPopup);
     }
     currentPopup = popup;
-    window.map.map.appendChild(popup);
-    var popupClose = currentPopup.querySelector('.popup__close');
-    popupClose.addEventListener('click', window.map.onCloseClick);
+    container.appendChild(popup);
+//    var popupClose = currentPopup.querySelector('.popup__close');
+//    popupClose.addEventListener('click', onCloseClick);
   };
+  var closeBtn = document.querySelector('.popup__close');
 
-  var closePopup = function () {
-    window.map.map.removeChild(currentPopup);
+  var closePopup = function (container) {
+    container.removeChild(currentPopup);
     currentPopup = null;
   };
+
   window.card = {
-    currentPopup: currentPopup,
+    closeBtn: closeBtn,
     createFeaturesElement: createFeaturesElement,
     createPopup: createPopup,
     showPopup: showPopup,

@@ -31,29 +31,24 @@
 
   var onButtonClose = function (event) {
     if (event.keyCode === 27) {
-      window.pin.activePin.classList.remove('map__pin--active');
-      window.card.closePopup();
+      window.pin.deactivate();
+      window.card.closePopup(map);
     }
   };
 
   var onPinClick = function (evn) {
     var target = evn.currentTarget;
     var idPin = target.dataset.id;
-    if (window.pin.activePin) {
-      window.pin.activePin.classList.remove('map__pin--active');
-    }
-    window.pin.activePin = target;
-    window.pin.activePin.classList.add('map__pin--active');
-    window.card.showPopup(window.data[idPin]);
+    window.pin.activate(target);
+
+    window.card.showPopup(window.data[idPin], map);
   };
 
   var onCloseClick = function () {
-    window.pin.activePin.classList.remove('map__pin--active');
-    window.card.closePopup();
+    window.pin.deactivate();
+    window.card.closePopup(map);
   };
-  window.map = {
-    map: map,
-    onCloseClick: onCloseClick
-  };
+
+  window.card.closeBtn.addEventListener('click', onCloseClick);
   pinMain.addEventListener('mouseup', onPinMouseup);
 })();

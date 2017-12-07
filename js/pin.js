@@ -16,8 +16,21 @@
     buttonMap.appendChild(imgAvatar);
     return buttonMap;
   };
+  var activate = function (pin) {
+    if (activePin) {
+      activePin.classList.remove('map__pin--active');
+    }
+    activePin = pin;
+    activePin.classList.add('map__pin--active');
+  };
+  var deactivate = function () {
+    activePin.classList.remove('map__pin--active');
+  };
+
   window.pin = {
-    activePin: activePin,
+    active: activePin,
+    activate: activate,
+    deactivate: deactivate,
     drawButton: drawButton
   };
 })();

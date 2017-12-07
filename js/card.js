@@ -41,10 +41,11 @@
     }
     currentPopup = popup;
     container.appendChild(popup);
-//    var popupClose = currentPopup.querySelector('.popup__close');
-//    popupClose.addEventListener('click', onCloseClick);
+    //    var popupClose = currentPopup.querySelector('.popup__close');
+    //    popupClose.addEventListener('click', onCloseClick);
   };
-  var closeBtn = document.querySelector('.popup__close');
+
+var closeBtn = document.querySelector('.popup__close');
 
   var closePopup = function (container) {
     container.removeChild(currentPopup);

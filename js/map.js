@@ -49,6 +49,6 @@
     window.card.closePopup(map);
   };
 
-  window.card.closeBtn.addEventListener('click', onCloseClick);
   pinMain.addEventListener('mouseup', onPinMouseup);
+  window.card.closeBtn.addEventListener('click', onCloseClick);
 })();

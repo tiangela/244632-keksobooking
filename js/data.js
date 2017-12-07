@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var ads = [];
   var homeTypeNames = [
     'Большая уютная квартира',
@@ -55,4 +56,5 @@
       }
     };
   }
+  window.data = ads;
 })();

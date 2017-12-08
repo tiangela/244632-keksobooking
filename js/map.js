@@ -25,15 +25,7 @@
     for (var l = 0; l < pins.length; l++) {
       pins[l].addEventListener('click', onPinClick);
     }
-    map.addEventListener('keydown', onButtonClose);
     pinMain.removeEventListener('mouseup', onPinMouseup);
-  };
-
-  var onButtonClose = function (event) {
-    if (event.keyCode === 27) {
-      window.pin.deactivate();
-      window.card.closePopup(map);
-    }
   };
 
   var onPinClick = function (evn) {
@@ -42,13 +34,24 @@
     window.pin.activate(target);
     window.card.showPopup(window.data[idPin], map);
     var closeBtn = window.card.getCloseBtn();
+    document.addEventListener('keydown', onButtonClose);
     closeBtn.addEventListener('click', onCloseClick);
+  };
+
+  var onButtonClose = function (event) {
+    if (event.keyCode === 27) {
+      window.pin.deactivate();
+      window.card.closePopup(map);
+      document.removeEventListener('keydown', onButtonClose);
+    }
   };
 
   var onCloseClick = function () {
     window.pin.deactivate();
     window.card.closePopup(map);
+    document.removeEventListener('keydown', onButtonClose);
   };
+
 
   pinMain.addEventListener('mouseup', onPinMouseup);
 })();

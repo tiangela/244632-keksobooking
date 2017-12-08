@@ -40,8 +40,9 @@
     var target = evn.currentTarget;
     var idPin = target.dataset.id;
     window.pin.activate(target);
-
     window.card.showPopup(window.data[idPin], map);
+    var closeBtn = window.card.getCloseBtn();
+    closeBtn.addEventListener('click', onCloseClick);
   };
 
   var onCloseClick = function () {
@@ -50,5 +51,4 @@
   };
 
   pinMain.addEventListener('mouseup', onPinMouseup);
-  window.card.closeBtn.addEventListener('click', onCloseClick);
 })();

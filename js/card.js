@@ -1,5 +1,7 @@
 'use strict';
+
 (function () {
+  var closeBtn = null;
   var currentPopup = null;
   var createFeaturesElement = function (facility, popupFeatures) {
     var fragment = document.createDocumentFragment();
@@ -10,6 +12,9 @@
       fragment.appendChild(list);
     }
     popupFeatures.appendChild(fragment);
+  };
+  var getCloseBtn = function () {
+    return closeBtn;
   };
 
   var createPopup = function (object) {
@@ -41,11 +46,8 @@
     }
     currentPopup = popup;
     container.appendChild(popup);
-    //    var popupClose = currentPopup.querySelector('.popup__close');
-    //    popupClose.addEventListener('click', onCloseClick);
+    closeBtn = currentPopup.querySelector('.popup__close');
   };
-
-var closeBtn = document.querySelector('.popup__close');
 
   var closePopup = function (container) {
     container.removeChild(currentPopup);
@@ -53,7 +55,7 @@ var closeBtn = document.querySelector('.popup__close');
   };
 
   window.card = {
-    closeBtn: closeBtn,
+    getCloseBtn: getCloseBtn,
     createFeaturesElement: createFeaturesElement,
     createPopup: createPopup,
     showPopup: showPopup,

@@ -4,7 +4,7 @@
   var pinMain = map.querySelector('.map__pin--main');
   var notice = document.querySelector('.notice');
   var fieldset = document.querySelectorAll('fieldset');
-  var address = document.querySelectorAll('#address');
+  var address = document.querySelector('#address');
 
   var fillMap = function() {
     var blockPins = document.querySelector('.map__pins');
@@ -67,20 +67,15 @@ pinMain.removeEventListener('mousedown', onPinMousedown);
     var moveAt = function (evn) {
       pinMain.style.left = evn.pageX - shiftX + 'px';
       pinMain.style.top = evn.pageY - shiftY + 'px';
-    };
-
-    var coordX = null;
-    var coordY = null;
-
-    var setCoords = function () {
-      coordX = pinMain.style.left;
-      coordY = pinMain.style.top;
+      address.value = parseInt(pinMain.style.left, 10);
     };
 
     moveAt(e);
+
     var onMouseMove = function (onEvn) {
       onEvn.preventDefault();
       moveAt(onEvn);
+      address.value = 'x: ' + parseInt(pinMain.style.left, 10) + ' y: ' + parseInt(pinMain.style.top, 10);
     };
 
     var onMouseUp = function (upEvt) {

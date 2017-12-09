@@ -75,7 +75,7 @@ pinMain.removeEventListener('mousedown', onPinMousedown);
     var onMouseMove = function (onEvn) {
       onEvn.preventDefault();
       moveAt(onEvn);
-      address.value = 'x: ' + parseInt(pinMain.style.left, 10) + ' y: ' + parseInt(pinMain.style.top, 10);
+      address.value = 'x: ' + parseInt(pinMain.style.left, 10) + ',' + ' y: ' + parseInt(pinMain.style.top, 10);
     };
 
     var onMouseUp = function (upEvt) {

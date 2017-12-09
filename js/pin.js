@@ -1,8 +1,8 @@
 'use strict';
 (function () {
   var activePin = null;
+  var pinSize = 46;
   var drawButton = function (pin) {
-    var pinSize = 46;
     var buttonMap = document.createElement('button');
     var imgAvatar = document.createElement('img');
     buttonMap.setAttribute('data-id', pin.id);
@@ -29,6 +29,7 @@
 
   window.pin = {
     active: activePin,
+    pinSize: pinSize,
     activate: activate,
     deactivate: deactivate,
     drawButton: drawButton

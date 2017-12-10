@@ -2,6 +2,7 @@
 (function () {
   var activePin = null;
   var pinSize = 46;
+  var mainPinSize = 62;
   var drawButton = function (pin) {
     var buttonMap = document.createElement('button');
     var imgAvatar = document.createElement('img');
@@ -30,6 +31,7 @@
   window.pin = {
     active: activePin,
     size: pinSize,
+    mainSize: mainPinSize,
     activate: activate,
     deactivate: deactivate,
     drawButton: drawButton

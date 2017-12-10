@@ -4,7 +4,7 @@
   var pinMain = map.querySelector('.map__pin--main');
   var notice = document.querySelector('.notice');
   var fieldset = document.querySelectorAll('fieldset');
-  var address = document.querySelector('#address');
+
 
   var fillMap = function () {
     var blockPins = document.querySelector('.map__pins');
@@ -14,6 +14,13 @@
     }
     blockPins.appendChild(fragment);
   };
+  var getInitialCoordsPinMain = function () {
+    var styles = getComputedStyle(pinMain);
+    var coords = ('x: ' + parseInt(styles.left, 10) + ',' + ' y: ' + parseInt(styles.top, 10));
+    return coords;
+  };
+  var coordsPinMain = getInitialCoordsPinMain();
+
   var onPinMouseup = function () {
     map.classList.remove('map--faded');
     notice.classList.remove('notice__form--disabled');
@@ -25,6 +32,7 @@
     for (var l = 0; l < pins.length; l++) {
       pins[l].addEventListener('click', onPinClick);
     }
+    window.form.setAddress(coordsPinMain);
     pinMain.removeEventListener('mouseup', onPinMouseup);
     pinMain.addEventListener('mousedown', onMainPinMousedown);
   };
@@ -66,14 +74,13 @@
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
-
       var shift = {
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY
       };
 
-      var nextY = (pinMain.offsetTop - shift.y) - (window.pin.size / 2 + 18);
-      if (nextY > 100 && nextY < 500) {
+      var nextY = pinMain.offsetTop - shift.y;
+      if (nextY >= 100 && nextY <= 500) {
         startCoords = {
           x: moveEvt.clientX,
           y: moveEvt.clientY
@@ -81,10 +88,13 @@
         pinMain.style.top = (pinMain.offsetTop - shift.y) + 'px';
         pinMain.style.left = (pinMain.offsetLeft - shift.x) + 'px';
       }
-    }
+    };
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      address.value = 'x: ' + parseInt(pinMain.style.left, 10) + ',' + ' y: ' + parseInt(pinMain.style.top + window.pin.size / 2 + 18, 10);
+      var coordX = parseInt(pinMain.style.left, 10);
+      var coordY = parseInt(pinMain.style.top + window.pin.mainSize / 2 + 22, 10);
+      window.form.setAddress('x: ' + coordX + ',' + ' y: ' + coordY);
+
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };

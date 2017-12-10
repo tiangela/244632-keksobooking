@@ -1,20 +1,20 @@
 'use strict';
-(function() {
+(function () {
   var map = document.querySelector('.map');
   var pinMain = map.querySelector('.map__pin--main');
   var notice = document.querySelector('.notice');
   var fieldset = document.querySelectorAll('fieldset');
   var address = document.querySelector('#address');
 
-  var fillMap = function() {
+  var fillMap = function () {
     var blockPins = document.querySelector('.map__pins');
     var fragment = document.createDocumentFragment();
-    for (var j = 0; j < window.data.length; j++) {
-      fragment.appendChild(window.pin.drawButton(window.data[j]));
+    for (var j = 0; j < window.data.ads.length; j++) {
+      fragment.appendChild(window.pin.drawButton(window.data.ads[j]));
     }
     blockPins.appendChild(fragment);
   };
-  var onPinMouseup = function() {
+  var onPinMouseup = function () {
     map.classList.remove('map--faded');
     notice.classList.remove('notice__form--disabled');
     for (var t = 0; t < fieldset.length; t++) {
@@ -26,15 +26,14 @@
       pins[l].addEventListener('click', onPinClick);
     }
     pinMain.removeEventListener('mouseup', onPinMouseup);
-    pinMain.addEventListener('mousedown', onPinMousedown);
+    pinMain.addEventListener('mousedown', onMainPinMousedown);
   };
-
 
   var onPinClick = function (evn) {
     var target = evn.currentTarget;
     var idPin = target.dataset.id;
     window.pin.activate(target);
-    window.card.showPopup(window.data[idPin], map);
+    window.card.showPopup(window.data.ads[idPin], map);
     var closeBtn = window.card.getCloseBtn();
     document.addEventListener('keydown', onButtonClose);
     closeBtn.addEventListener('click', onCloseClick);
@@ -53,33 +52,39 @@
     window.card.closePopup(map);
     document.removeEventListener('keydown', onButtonClose);
   };
-pinMain.addEventListener('mouseup', onPinMouseup);
-pinMain.removeEventListener('mousedown', onPinMousedown);
 
-  var onPinMousedown = function (e) {
-    e.preventDefault();
+
+  pinMain.addEventListener('mouseup', onPinMouseup);
+
+  var onMainPinMousedown = function (evt) {
+    evt.preventDefault();
     pinMain.style.zIndex = 1000;
-
-    var coords = getCoords(pinMain);
-    var shiftX = e.pageX - coords.left;
-    var shiftY = e.pageY - coords.top;
-
-    var moveAt = function (evn) {
-      pinMain.style.left = evn.pageX - shiftX + 'px';
-      pinMain.style.top = evn.pageY - shiftY + 'px';
-      address.value = parseInt(pinMain.style.left, 10);
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
     };
 
-    moveAt(e);
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
 
-    var onMouseMove = function (onEvn) {
-      onEvn.preventDefault();
-      moveAt(onEvn);
-      address.value = 'x: ' + parseInt(pinMain.style.left, 10) + ',' + ' y: ' + parseInt(pinMain.style.top, 10);
-    };
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
 
+      var nextY = (pinMain.offsetTop - shift.y) + (window.pin.pinSize / 2 + 18);
+      if (nextY > 100 && nextY < 500) {
+        startCoords = {
+          x: moveEvt.clientX,
+          y: moveEvt.clientY
+        };
+        pinMain.style.top = (pinMain.offsetTop - shift.y) + 'px';
+        pinMain.style.left = (pinMain.offsetLeft - shift.x) + 'px';
+      }
+    }
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
+      address.value = 'x: ' + parseInt(pinMain.style.left, 10) + ',' + ' y: ' + parseInt(pinMain.style.top + window.pin.pinSize / 2 + 18, 10);
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
@@ -87,16 +92,4 @@ pinMain.removeEventListener('mousedown', onPinMousedown);
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   };
-
-  pinMain.ondragstart = function () {
-    return false;
-  };
-  var getCoords = function (elem) { // кроме IE8-
-    var box = elem.getBoundingClientRect();
-    return {
-      top: box.top + pageYOffset,
-      left: box.left + pageXOffset
-    };
-  };
-
 })();

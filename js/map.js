@@ -72,7 +72,7 @@
         y: startCoords.y - moveEvt.clientY
       };
 
-      var nextY = (pinMain.offsetTop - shift.y) + (window.pin.pinSize / 2 + 18);
+      var nextY = (pinMain.offsetTop - shift.y) - (window.pin.size / 2 + 18);
       if (nextY > 100 && nextY < 500) {
         startCoords = {
           x: moveEvt.clientX,
@@ -84,7 +84,7 @@
     }
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      address.value = 'x: ' + parseInt(pinMain.style.left, 10) + ',' + ' y: ' + parseInt(pinMain.style.top + window.pin.pinSize / 2 + 18, 10);
+      address.value = 'x: ' + parseInt(pinMain.style.left, 10) + ',' + ' y: ' + parseInt(pinMain.style.top + window.pin.size / 2 + 18, 10);
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };

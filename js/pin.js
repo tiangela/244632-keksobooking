@@ -29,7 +29,7 @@
 
   window.pin = {
     active: activePin,
-    pinSize: pinSize,
+    size: pinSize,
     activate: activate,
     deactivate: deactivate,
     drawButton: drawButton

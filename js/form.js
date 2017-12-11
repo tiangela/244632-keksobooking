@@ -78,6 +78,10 @@
     setMinPrice(value);
   };
 
+  var setAddress = function (value) {
+    address.value = value;
+  };
+
   setRooms(roomNumber.value);
   setMinPrice(typeElement.value);
   roomNumber.addEventListener('change', onRoomChange);
@@ -85,4 +89,8 @@
   typeElement.addEventListener('change', onTypeChange);
   timeIn.addEventListener('change', onTimeinChange);
   timeOut.addEventListener('change', onTimeoutChange);
+
+  window.form = {
+    setAddress: setAddress
+  };
 })();

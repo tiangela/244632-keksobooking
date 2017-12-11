@@ -56,5 +56,8 @@
       }
     };
   }
-  window.data = ads;
+  window.data = {
+    ads: ads,
+    getRandomValue: getRandomValue
+  };
 })();

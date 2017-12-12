@@ -55,10 +55,10 @@
   };
 
   window.card = {
+    show: showPopup,
     getCloseBtn: getCloseBtn,
     createFeaturesElement: createFeaturesElement,
     createPopup: createPopup,
-    showPopup: showPopup,
     closePopup: closePopup
   };
 })();

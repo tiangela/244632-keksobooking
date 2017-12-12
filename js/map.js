@@ -41,7 +41,7 @@
     var target = evn.currentTarget;
     var idPin = target.dataset.id;
     window.pin.activate(target);
-    window.card.showPopup(window.data.ads[idPin], map);
+    window.card.show(window.data.ads[idPin], map);
     var closeBtn = window.card.getCloseBtn();
     document.addEventListener('keydown', onButtonClose);
     closeBtn.addEventListener('click', onCloseClick);

@@ -9,23 +9,16 @@
   var roomNumber = document.querySelector('#room_number');
   var capacity = document.querySelector('#capacity');
   var buttonSubmit = document.querySelector('.form__submit');
-
   var minPriceTypes = {
     'bungalo': 0,
     'flat': 1000,
     'house': 5000,
     'palace': 10000
   };
-
-  var onTimeinChange = function (evn) {
-    var timeInChoice = evn.currentTarget;
-    timeOut.value = timeInChoice.value;
+  var setMinPrice = function (value) {
+    price.min = minPriceTypes[value];
   };
-
-  var onTimeoutChange = function (evn) {
-    var timeOutChoice = evn.currentTarget;
-    timeIn.value = timeOutChoice.value;
-  };
+  setMinPrice(typeElement.value);
 
   var setRooms = function () {
     var roomChoice = roomNumber.value;
@@ -39,20 +32,12 @@
       capacity.value = '0';
     }
   };
-
-  var onRoomChange = function (evn) {
+/*  var onRoomChange = function (evn) {
     var value = evn.currentTarget.value;
     setRooms(value);
-  };
+  };*/
 
   var onButtonError = function () {
-    if (address.validity.valueMissing) {
-      address.setCustomValidity('Обязательное поле');
-      address.style.border = '2px solid red';
-    } else {
-      address.setCustomValidity('');
-      address.style.border = '1px solid #d9d9d3';
-    }
     if (titleForm.validity.valueMissing) {
       titleForm.setCustomValidity('Обязательное поле');
       titleForm.style.border = '2px solid red';
@@ -69,13 +54,8 @@
     }
   };
 
-  var setMinPrice = function (value) {
-    price.min = minPriceTypes[value];
-  };
-
-  var onTypeChange = function (evt) {
-    var value = evt.currentTarget.value;
-    setMinPrice(value);
+  var syncValues = function (element, value) {
+    element.value = value;
   };
 
   var setAddress = function (value) {
@@ -83,14 +63,15 @@
   };
 
   setRooms(roomNumber.value);
-  setMinPrice(typeElement.value);
-  roomNumber.addEventListener('change', onRoomChange);
+  //roomNumber.addEventListener('change', onRoomChange);
   buttonSubmit.addEventListener('click', onButtonError);
-  typeElement.addEventListener('change', onTypeChange);
-  timeIn.addEventListener('change', onTimeinChange);
-  timeOut.addEventListener('change', onTimeoutChange);
+  window.synchronizeFields(roomNumber, capacity, ['1', '2', '3', '100'], ['1', '2', '3', '0'], syncValues);
+  window.synchronizeFields(typeElement, price, ['bungalo', 'flat', 'house', 'palace'], ['0', '1000', '5000', '10000'], syncValues);
+  window.synchronizeFields(timeIn, timeOut, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
+  window.synchronizeFields(timeOut, timeIn, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
 
   window.form = {
     setAddress: setAddress
   };
+
 })();

@@ -1,5 +1,19 @@
 'use strict';
 (function () {
+  var TIMES = [
+    '12:00',
+    '13:00',
+    '14:00'
+  ];
+  var TYPES = [
+    'bungalo',
+    'flat',
+    'house',
+    'palace'
+  ];
+  var MIN_PRICES = [0, 1000, 5000, 10000];
+  var ROOMS = ['1', '2', '3', '100'];
+  var GUESTS = ['1', '2', '3', '0'];
   var timeIn = document.querySelector('#timein');
   var timeOut = document.querySelector('#timeout');
   var typeElement = document.querySelector('#type');
@@ -9,23 +23,16 @@
   var roomNumber = document.querySelector('#room_number');
   var capacity = document.querySelector('#capacity');
   var buttonSubmit = document.querySelector('.form__submit');
-
   var minPriceTypes = {
     'bungalo': 0,
     'flat': 1000,
     'house': 5000,
     'palace': 10000
   };
-
-  var onTimeinChange = function (evn) {
-    var timeInChoice = evn.currentTarget;
-    timeOut.value = timeInChoice.value;
+  var setMinPrice = function (value) {
+    price.min = minPriceTypes[value];
   };
-
-  var onTimeoutChange = function (evn) {
-    var timeOutChoice = evn.currentTarget;
-    timeIn.value = timeOutChoice.value;
-  };
+  setMinPrice(typeElement.value);
 
   var setRooms = function () {
     var roomChoice = roomNumber.value;
@@ -40,42 +47,29 @@
     }
   };
 
-  var onRoomChange = function (evn) {
-    var value = evn.currentTarget.value;
-    setRooms(value);
-  };
-
   var onButtonError = function () {
-    if (address.validity.valueMissing) {
-      address.setCustomValidity('Обязательное поле');
-      address.style.border = '2px solid red';
-    } else {
-      address.setCustomValidity('');
-      address.style.border = '1px solid #d9d9d3';
-    }
     if (titleForm.validity.valueMissing) {
-      titleForm.setCustomValidity('Обязательное поле');
+      titleForm.style.border = '2px solid red';
+    } else if (titleForm.validity.tooShort || titleForm.validity.tooLong) {
       titleForm.style.border = '2px solid red';
     } else {
       titleForm.setCustomValidity('');
       titleForm.style.border = '1px solid #d9d9d3';
     }
     if (price.validity.valueMissing) {
-      price.setCustomValidity('Обязательное поле');
+      price.style.border = '2px solid red';
+    } else if (price.validity.rangeUnderflow) {
       price.style.border = '2px solid red';
     } else {
-      price.setCustomValidity('');
       price.style.border = '1px solid #d9d9d3';
     }
   };
 
-  var setMinPrice = function (value) {
-    price.min = minPriceTypes[value];
+  var syncValues = function (element, value) {
+    element.value = value;
   };
-
-  var onTypeChange = function (evt) {
-    var value = evt.currentTarget.value;
-    setMinPrice(value);
+  var syncMinPrice = function (element, value) {
+    element.min = value;
   };
 
   var setAddress = function (value) {
@@ -83,14 +77,14 @@
   };
 
   setRooms(roomNumber.value);
-  setMinPrice(typeElement.value);
-  roomNumber.addEventListener('change', onRoomChange);
   buttonSubmit.addEventListener('click', onButtonError);
-  typeElement.addEventListener('change', onTypeChange);
-  timeIn.addEventListener('change', onTimeinChange);
-  timeOut.addEventListener('change', onTimeoutChange);
+  window.synchronizeFields(roomNumber, capacity, ROOMS, GUESTS, syncValues);
+  window.synchronizeFields(typeElement, price, TYPES, MIN_PRICES, syncMinPrice);
+  window.synchronizeFields(timeIn, timeOut, TIMES, TIMES, syncValues);
+  window.synchronizeFields(timeOut, timeIn, TIMES, TIMES, syncValues);
 
   window.form = {
     setAddress: setAddress
   };
+
 })();

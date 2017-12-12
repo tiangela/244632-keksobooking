@@ -1,5 +1,19 @@
 'use strict';
 (function () {
+  var TIMES = [
+    '12:00',
+    '13:00',
+    '14:00'
+  ];
+  var TYPES = [
+    'bungalo',
+    'flat',
+    'house',
+    'palace'
+  ];
+  var MIN_PRICES = [0, 1000, 5000, 10000];
+  var ROOMS = ['1', '2', '3', '100'];
+  var GUESTS = ['1', '2', '3', '0'];
   var timeIn = document.querySelector('#timein');
   var timeOut = document.querySelector('#timeout');
   var typeElement = document.querySelector('#type');
@@ -32,24 +46,21 @@
       capacity.value = '0';
     }
   };
-/*  var onRoomChange = function (evn) {
-    var value = evn.currentTarget.value;
-    setRooms(value);
-  };*/
 
   var onButtonError = function () {
     if (titleForm.validity.valueMissing) {
-      titleForm.setCustomValidity('Обязательное поле');
+      titleForm.style.border = '2px solid red';
+    } else if (titleForm.validity.tooShort || titleForm.validity.tooLong) {
       titleForm.style.border = '2px solid red';
     } else {
       titleForm.setCustomValidity('');
       titleForm.style.border = '1px solid #d9d9d3';
     }
     if (price.validity.valueMissing) {
-      price.setCustomValidity('Обязательное поле');
+      price.style.border = '2px solid red';
+    } else if (price.validity.rangeUnderflow) {
       price.style.border = '2px solid red';
     } else {
-      price.setCustomValidity('');
       price.style.border = '1px solid #d9d9d3';
     }
   };
@@ -57,18 +68,20 @@
   var syncValues = function (element, value) {
     element.value = value;
   };
+  var syncMinPrice = function (element, value) {
+    element.min = value;
+  };
 
   var setAddress = function (value) {
     address.value = value;
   };
 
   setRooms(roomNumber.value);
-  //roomNumber.addEventListener('change', onRoomChange);
   buttonSubmit.addEventListener('click', onButtonError);
-  window.synchronizeFields(roomNumber, capacity, ['1', '2', '3', '100'], ['1', '2', '3', '0'], syncValues);
-  window.synchronizeFields(typeElement, price, ['bungalo', 'flat', 'house', 'palace'], ['0', '1000', '5000', '10000'], syncValues);
-  window.synchronizeFields(timeIn, timeOut, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
-  window.synchronizeFields(timeOut, timeIn, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
+  window.synchronizeFields(roomNumber, capacity, ROOMS, GUESTS, syncValues);
+  window.synchronizeFields(typeElement, price, TYPES, MIN_PRICES, syncMinPrice);
+  window.synchronizeFields(timeIn, timeOut, TIMES, TIMES, syncValues);
+  window.synchronizeFields(timeOut, timeIn, TIMES, TIMES, syncValues);
 
   window.form = {
     setAddress: setAddress

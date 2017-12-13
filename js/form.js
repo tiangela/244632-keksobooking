@@ -1,16 +1,7 @@
 'use strict';
-(function () {
-  var TIMES = [
-    '12:00',
-    '13:00',
-    '14:00'
-  ];
-  var TYPES = [
-    'bungalo',
-    'flat',
-    'house',
-    'palace'
-  ];
+(function() {
+  var TIMES = ['12:00', '13:00', '14:00'];
+  var TYPES = ['bungalo', 'flat', 'house', 'palace'];
   var MIN_PRICES = [0, 1000, 5000, 10000];
   var ROOMS = ['1', '2', '3', '100'];
   var GUESTS = ['1', '2', '3', '0'];
@@ -23,18 +14,20 @@
   var roomNumber = document.querySelector('#room_number');
   var capacity = document.querySelector('#capacity');
   var buttonSubmit = document.querySelector('.form__submit');
+  var notice = document.querySelector('.notice');
+  var form = notice.querySelector('.notice__form');
   var minPriceTypes = {
     'bungalo': 0,
     'flat': 1000,
     'house': 5000,
     'palace': 10000
   };
-  var setMinPrice = function (value) {
+  var setMinPrice = function(value) {
     price.min = minPriceTypes[value];
   };
   setMinPrice(typeElement.value);
 
-  var setRooms = function () {
+  var setRooms = function() {
     var roomChoice = roomNumber.value;
     if (roomChoice === '1') {
       capacity.value = '1';
@@ -47,7 +40,7 @@
     }
   };
 
-  var onButtonError = function () {
+  var onButtonError = function() {
     if (titleForm.validity.valueMissing) {
       titleForm.style.border = '2px solid red';
     } else if (titleForm.validity.tooShort || titleForm.validity.tooLong) {
@@ -75,6 +68,24 @@
   var setAddress = function (value) {
     address.value = value;
   };
+// работы с сервером
+var onMessageError = function (errorMessage) {
+  var node = document.createElement('div');
+  node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+  node.style.position = 'absolute';
+  node.style.left = 0;
+  node.style.right = 0;
+  node.style.fontSize = '30px';
+  node.textContent = errorMessage;
+  document.body.insertAdjacentElement('afterbegin', node);
+};
+
+  form.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(form), function () {
+      notice.classList.add('hidden');
+    }, onMessageError);
+    evt.preventDefault();
+  });
 
   setRooms(roomNumber.value);
   buttonSubmit.addEventListener('click', onButtonError);

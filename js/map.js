@@ -26,7 +26,7 @@
   var onAdRender = function (ad) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < ad.length; i++) {
-      fragment.appendChild(window.pin.drawButton(ads[i]));
+      fragment.appendChild(window.pin.drawButton(window.data.ads[j]));
     }
     blockPins.appendChild(fragment);
   };

@@ -45,7 +45,7 @@
     map.classList.remove('map--faded');
     notice.classList.remove('notice__form--disabled');
     pinMain.addEventListener('mousedown', onMainPinMousedown);
-  }
+  };
 
   var onPinMouseup = function () {
     window.backend.load(onRender, window.backend.onError);

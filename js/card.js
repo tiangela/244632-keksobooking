@@ -36,7 +36,6 @@
     paragraphs[3].textContent = 'Заезд после' + object.offer.checkin + ',' + ' выезд до ' + object.offer.checkout;
     paragraphs[4].textContent = object.offer.description;
     adElement.querySelector('.popup__avatar').src = object.author.avatar;
-  // adElement.querySelector('.popup__pictures li img').src = object.offer.photos;
     for (var i = 0; i < object.offer.photos.length; i++) {
       var listTag = document.createElement('li');
       var imageTag = document.createElement('img');

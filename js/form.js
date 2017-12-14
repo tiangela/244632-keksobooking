@@ -68,12 +68,12 @@
   var setAddress = function (value) {
     address.value = value;
   };
-// работы с сервером
+  // работы с сервером
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.backend.save(new FormData(form), function () {
-      form.reset()
-    }, window.backend.onError)
+      form.reset();
+    }, window.backend.onError);
   });
 
   setRooms(roomNumber.value);

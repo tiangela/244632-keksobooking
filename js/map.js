@@ -6,7 +6,6 @@
   var fieldset = document.querySelectorAll('fieldset');
   var blockPins = document.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
-  // в область видимости модуля выносим наши объявления. Они к нам прилетят в onRender
   var offers = null;
 
   var fillMap = function (data) {

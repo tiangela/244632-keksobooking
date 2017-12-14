@@ -22,6 +22,7 @@
     var adElement = similarAdsTemplate.cloneNode(true);
     var popupFeatures = adElement.querySelector('.popup__features');
     var paragraphs = adElement.querySelectorAll('.map__card p');
+    var imagesList = adElement.querySelector('.popup__pictures');
     var typeofDwelling = {
       'flat': 'Квартира',
       'house': 'Дом',
@@ -35,6 +36,15 @@
     paragraphs[3].textContent = 'Заезд после' + object.offer.checkin + ',' + ' выезд до ' + object.offer.checkout;
     paragraphs[4].textContent = object.offer.description;
     adElement.querySelector('.popup__avatar').src = object.author.avatar;
+  // adElement.querySelector('.popup__pictures li img').src = object.offer.photos;
+    for (var i = 0; i < object.offer.photos.length; i++) {
+      var listTag = document.createElement('li');
+      var imageTag = document.createElement('img');
+      imageTag.style = 'width: 40px; height: 40px; margin-right: 5px';
+      imageTag.setAttribute('src', object.offer.photos[i]);
+      listTag.appendChild(imageTag);
+      imagesList.appendChild(listTag);
+    }
     createFeaturesElement(object.offer.features, popupFeatures);
     return adElement.querySelector('.map__card');
   };

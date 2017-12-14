@@ -1,16 +1,7 @@
 'use strict';
 (function () {
-  var TIMES = [
-    '12:00',
-    '13:00',
-    '14:00'
-  ];
-  var TYPES = [
-    'bungalo',
-    'flat',
-    'house',
-    'palace'
-  ];
+  var TIMES = ['12:00', '13:00', '14:00'];
+  var TYPES = ['bungalo', 'flat', 'house', 'palace'];
   var MIN_PRICES = [0, 1000, 5000, 10000];
   var ROOMS = ['1', '2', '3', '100'];
   var GUESTS = ['1', '2', '3', '0'];
@@ -23,6 +14,8 @@
   var roomNumber = document.querySelector('#room_number');
   var capacity = document.querySelector('#capacity');
   var buttonSubmit = document.querySelector('.form__submit');
+  var notice = document.querySelector('.notice');
+  var form = notice.querySelector('.notice__form');
   var minPriceTypes = {
     'bungalo': 0,
     'flat': 1000,
@@ -75,6 +68,13 @@
   var setAddress = function (value) {
     address.value = value;
   };
+  // работы с сервером
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), function () {
+      form.reset();
+    }, window.backend.onError);
+  });
 
   setRooms(roomNumber.value);
   buttonSubmit.addEventListener('click', onButtonError);

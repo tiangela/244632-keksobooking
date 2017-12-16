@@ -6,7 +6,7 @@
   var fieldset = document.querySelectorAll('fieldset');
   var blockPins = document.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
-  var offers = null;
+  window.offers = null;
 
   var fillMap = function (data) {
     for (var j = 0; j < data.length; j++) {
@@ -22,9 +22,8 @@
   };
 
   var onRender = function (data) {
-
-    offers = data;
-    offers.forEach(function (offer, index) {
+    window.offers = data;
+    window.offers.forEach(function (offer, index) {
       offer.id = index;
     });
 
@@ -40,8 +39,8 @@
       fieldset[t].classList.remove('disabled');
     }
 
-    var coordsPinMain = getInitialCoordsPinMain();
-    window.form.setAddress(coordsPinMain);
+  //  var coordsPinMain = getInitialCoordsPinMain();
+  //  window.form.setAddress(coordsPinMain);
     map.classList.remove('map--faded');
     notice.classList.remove('notice__form--disabled');
     pinMain.addEventListener('mousedown', onMainPinMousedown);
@@ -56,12 +55,17 @@
     var target = evn.currentTarget;
     var idPin = target.dataset.id;
     window.pin.activate(target);
-
-    window.card.show(offers[idPin], map);
+    window.card.show(window.offers[idPin], map);
     var closeBtn = window.card.getCloseBtn();
     document.addEventListener('keydown', onButtonClose);
     closeBtn.addEventListener('click', onCloseClick);
   };
+
+  var onMainPinClick = function () {
+    var coordsPinMain = getInitialCoordsPinMain();
+    window.form.setAddress(coordsPinMain);
+  };
+  pinMain.addEventListener('click', onMainPinClick);
 
   var onButtonClose = function (event) {
     if (event.keyCode === 27) {
@@ -117,4 +121,5 @@
   };
 
   pinMain.addEventListener('mouseup', onPinMouseup);
+//  window.map;
 })();

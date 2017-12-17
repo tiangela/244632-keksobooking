@@ -72,7 +72,7 @@
   };
 
   var updateFilteredPins = function () {
-    filteredPins = window.pins;
+    filteredPins = window.map.pins;
 
     // При изменении формы с фильтрами изначально скрываем все пины
     hideAllPins(filteredPins);

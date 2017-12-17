@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var KEY_ESC = 27;
   var map = document.querySelector('.map');
   var pinMain = map.querySelector('.map__pin--main');
   var notice = document.querySelector('.notice');
@@ -39,8 +40,6 @@
       fieldset[t].classList.remove('disabled');
     }
 
-  //  var coordsPinMain = getInitialCoordsPinMain();
-  //  window.form.setAddress(coordsPinMain);
     map.classList.remove('map--faded');
     notice.classList.remove('notice__form--disabled');
     pinMain.addEventListener('mousedown', onMainPinMousedown);
@@ -68,7 +67,7 @@
   pinMain.addEventListener('click', onMainPinClick);
 
   var onButtonClose = function (event) {
-    if (event.keyCode === 27) {
+    if (event.keyCode === KEY_ESC) {
       window.pin.deactivate();
       window.card.closePopup(map);
       document.removeEventListener('keydown', onButtonClose);
@@ -121,5 +120,7 @@
   };
 
   pinMain.addEventListener('mouseup', onPinMouseup);
-//  window.map;
+  window.map = {
+    pins: onRender
+  };
 })();

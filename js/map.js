@@ -13,7 +13,7 @@
     for (var j = 0; j < data.length; j++) {
       var drawPin = window.pin.drawButton(data[j]);
       fragment.appendChild(drawPin);
-      if (data[j] > 4) {
+      if (j > 4) {
         drawPin.classList.add('hidden');
       }
     }

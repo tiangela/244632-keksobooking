@@ -29,14 +29,23 @@
 
   var setRooms = function () {
     var roomChoice = roomNumber.value;
+    for (var i = 0; i < capacity.options.length; i++) {
+      capacity.options[i].hidden = false;
+    }
     if (roomChoice === '1') {
       capacity.value = '1';
+      capacity.options[0].hidden = true;
+      capacity.options[1].hidden = true;
+      capacity.options[3].hidden = true;
     } else if (roomChoice === '2') {
-      capacity.value = '2';
+      capacity.options[1].hidden = true;
+      capacity.options[2].hidden = true;
     } else if (roomChoice === '3') {
-      capacity.value = '3';
+      capacity.options[3].hidden = true;
     } else if (roomChoice === '100') {
-      capacity.value = '0';
+      capacity.options[1].hidden = true;
+      capacity.options[2].hidden = true;
+      capacity.options[3].hidden = true;
     }
   };
 
@@ -73,6 +82,7 @@
     evt.preventDefault();
     window.backend.save(new FormData(form), function () {
       form.reset();
+      setRooms(roomNumber.value);
     }, window.backend.onError);
   });
 

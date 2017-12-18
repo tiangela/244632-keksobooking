@@ -3,7 +3,7 @@
 (function () {
 
   var ads = [];
-  var homeTypeNames = [
+  var homeTypeNames = [ // это тоже константы!
     'Большая уютная квартира',
     'Маленькая неуютная квартира',
     'Огромный прекрасный дворец',
@@ -17,6 +17,7 @@
   var types = ['flat', 'house', 'bungalo'];
   var checkins = ['12:00', '13:00', '14:00'];
   var checkouts = ['12:00', '13:00', '14:00'];
+
   var getRandomValue = function (minRandom, maxRandom) {
     return Math.round(Math.random() * (maxRandom - minRandom) + minRandom);
   };

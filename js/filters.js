@@ -2,7 +2,7 @@
 (function () {
   var FILTER_MIN_PRICE = 10000;
   var FILTER_MAX_PRICE = 50000;
-  var MAX_NUMBER_OF_PINS = 5
+  var MAX_NUMBER_OF_PINS = 5;
 
   var filters = document.querySelector('.map__filters');
   var housingType = filters.querySelector('#housing-type');
@@ -44,7 +44,7 @@
       var id = item.dataset.id;
       var adPrice = window.offers[id].offer.price + '';
 
-      switch (filterSelect.value) { // перечитать про switch
+      switch (filterSelect.value) {
         case 'any':
           return true;
         case 'middle':

@@ -10,10 +10,10 @@
   window.offers = null;
 
   var fillMap = function (data) {
-    for (var j = 0; j < data.length; j++) {
-      var drawPin = window.pin.drawButton(data[j]);
+    for (var i = 0; i < data.length; i++) {
+      var drawPin = window.pin.drawButton(data[i]);
       fragment.appendChild(drawPin);
-      if (j > 4) {
+      if (i > 4) {
         drawPin.classList.add('hidden');
       }
     }
@@ -109,6 +109,7 @@
         pinMain.style.left = (pinMain.offsetLeft - shift.x) + 'px';
       }
     };
+
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
       var coordX = parseInt(pinMain.style.left, 10);

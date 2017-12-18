@@ -5,6 +5,12 @@
   var MIN_PRICES = [0, 1000, 5000, 10000];
   var ROOMS = ['1', '2', '3', '100'];
   var GUESTS = ['1', '2', '3', '0'];
+  var MIN_PRICE_TYPES = {
+    'bungalo': 0,
+    'flat': 1000,
+    'house': 5000,
+    'palace': 10000
+  };
   var timeIn = document.querySelector('#timein');
   var timeOut = document.querySelector('#timeout');
   var typeElement = document.querySelector('#type');
@@ -16,16 +22,10 @@
   var buttonSubmit = document.querySelector('.form__submit');
   var notice = document.querySelector('.notice');
   var form = notice.querySelector('.notice__form');
-  var minPriceTypes = {
-    'bungalo': 0,
-    'flat': 1000,
-    'house': 5000,
-    'palace': 10000
-  };
+
   var setMinPrice = function (value) {
-    price.min = minPriceTypes[value];
+    price.min = MIN_PRICE_TYPES[value];
   };
-  setMinPrice(typeElement.value);
 
   var setRooms = function () {
     var roomChoice = roomNumber.value;
@@ -49,6 +49,17 @@
     }
   };
 
+  var syncValues = function (element, value) {
+    element.value = value;
+  };
+  var syncMinPrice = function (element, value) {
+    element.min = value;
+  };
+
+  var setAddress = function (value) {
+    address.value = value;
+  };
+
   var onButtonError = function () {
     if (titleForm.validity.valueMissing) {
       titleForm.style.border = '2px solid red';
@@ -67,22 +78,11 @@
     }
   };
 
-  var syncValues = function (element, value) {
-    element.value = value;
-  };
-  var syncMinPrice = function (element, value) {
-    element.min = value;
-  };
-
-  var setAddress = function (value) {
-    address.value = value;
-  };
-
   var onRoomChange = function () {
     setRooms();
   };
   // работы с сервером
-  form.addEventListener('submit', function (evt) {
+  form.addEventListener('submit', function (evt) { // ПЕРЕДЕЛАТЬ!
     evt.preventDefault();
     window.backend.save(new FormData(form), function () {
       form.reset();
@@ -90,6 +90,7 @@
     }, window.backend.onError);
   });
 
+  setMinPrice(typeElement.value);
   setRooms(roomNumber.value);
   roomNumber.addEventListener('change', onRoomChange);
   buttonSubmit.addEventListener('click', onButtonError);

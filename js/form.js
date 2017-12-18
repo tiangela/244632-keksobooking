@@ -38,14 +38,14 @@
       capacity.options[1].hidden = true;
       capacity.options[3].hidden = true;
     } else if (roomChoice === '2') {
-      capacity.options[1].hidden = true;
-      capacity.options[2].hidden = true;
+      capacity.options[0].hidden = true;
+      capacity.options[3].hidden = true;
     } else if (roomChoice === '3') {
       capacity.options[3].hidden = true;
     } else if (roomChoice === '100') {
+      capacity.options[0].hidden = true;
       capacity.options[1].hidden = true;
       capacity.options[2].hidden = true;
-      capacity.options[3].hidden = true;
     }
   };
 
@@ -77,6 +77,10 @@
   var setAddress = function (value) {
     address.value = value;
   };
+
+  var onRoomChange = function () {
+    setRooms();
+  };
   // работы с сервером
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
@@ -87,6 +91,7 @@
   });
 
   setRooms(roomNumber.value);
+  roomNumber.addEventListener('change', onRoomChange);
   buttonSubmit.addEventListener('click', onButtonError);
   window.synchronizeFields(roomNumber, capacity, ROOMS, GUESTS, syncValues);
   window.synchronizeFields(typeElement, price, TYPES, MIN_PRICES, syncMinPrice);

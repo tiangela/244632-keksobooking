@@ -7,12 +7,15 @@
   var fieldset = document.querySelectorAll('fieldset');
   var blockPins = document.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
-
   window.offers = null;
 
   var fillMap = function (data) {
-    for (var j = 0; j < data.slice(0, 5).length; j++) {
-      fragment.appendChild(window.pin.drawButton(data[j]));
+    for (var j = 0; j < data.length; j++) {
+      var drawPin = window.pin.drawButton(data[j]);
+      fragment.appendChild(drawPin);
+      if (data[j] > 4) {
+        drawPin.classList.add('hidden');
+      }
     }
     blockPins.appendChild(fragment);
   };

@@ -67,16 +67,20 @@
     closeBtn = currentPopup.querySelector('.popup__close');
   };
 
-  var closePopup = function (container) {
-    container.removeChild(currentPopup);
-    currentPopup = null;
+  var closePopup = function () {
+    if (currentPopup) {
+      currentPopup.remove();
+      currentPopup = null;
+    }
   };
+
 
   window.card = {
     show: showPopup,
     getCloseBtn: getCloseBtn,
     createFeaturesElement: createFeaturesElement,
     createPopup: createPopup,
-    closePopup: closePopup
+    closePopup: closePopup,
+
   };
 })();

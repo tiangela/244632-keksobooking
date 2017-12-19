@@ -23,7 +23,7 @@
 
   var getInitialCoordsPinMain = function () {
     var styles = getComputedStyle(pinMain);
-    var coords = ('x: ' + parseInt(styles.left, 10) + ',' + ' y: ' + parseInt(styles.top, 10));
+    var coords = ('x: ' + parseInt(styles.left, 10) + ',' + ' y: ' + (parseInt(styles.top, 10) + PIN_Y_SHIFT));
     return coords;
   };
 
@@ -57,8 +57,8 @@
     pinMain.removeEventListener('mouseup', onPinMouseup);
   };
 
-  var onPinClick = function (evn) {
-    var target = evn.currentTarget;
+  var onPinClick = function (evt) {
+    var target = evt.currentTarget;
     var idPin = target.dataset.id;
     window.pin.activate(target);
     window.card.show(window.offers[idPin], map);

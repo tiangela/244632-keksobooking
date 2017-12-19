@@ -11,7 +11,7 @@
   var housingGuests = filters.querySelector('#housing-guests');
   var housingFeaturesCollection = filters.querySelectorAll('.feature input[type="checkbox"]');
   var housingFeaturesArray = Array.prototype.slice.call(housingFeaturesCollection, 0);
-  var filteredPins; // не надо ли тут null?
+  var filteredPins;
 
 
   var hideAllPins = function (pins) {
@@ -63,14 +63,14 @@
     var id = item.dataset.id;
     var features = [];
 
-    housingFeaturesArray.forEach(function (_item, i) { // что это за странная запись нижнее подчеркивание item?
+    housingFeaturesArray.forEach(function (_item, i) {
       if (housingFeaturesArray[i].checked) {
         features.push(housingFeaturesArray[i].value);
       }
     });
 
     return features.every(function (feature) {
-      return window.offers[id].offer.features.indexOf(feature) !== -1; // тут что происходит?
+      return window.offers[id].offer.features.indexOf(feature) !== -1;
     });
   };
 

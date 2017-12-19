@@ -1,6 +1,7 @@
 'use strict';
 (function () {
   var SERVER_URL = 'https://1510.dump.academy/keksobooking';
+  var SET_TIME = 4000;
   var onMessageError = function (errorMessage) {
     var node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background: -webkit-linear-gradient(97deg, rgb(222, 233, 243), rgb(32, 44, 122)); background: linear-gradient(97deg, rgb(222, 233, 243), rgb(32, 44, 122))';
@@ -12,7 +13,7 @@
     document.body.insertAdjacentElement('afterbegin', node);
     setTimeout(function () {
       node.remove();
-    }, 4000);
+    }, SET_TIME);
   };
 
   var setup = function (onLoad, onError) {

@@ -45,10 +45,10 @@
     var paragraphs = adElement.querySelectorAll('.map__card p');
     adElement.querySelector('h3').textContent = object.offer.title;
     paragraphs[0].textContent = object.offer.address;
-    adElement.querySelector('.popup__price').innerHTML = object.offer.price + '&#x20bd;/ночь';
+    adElement.querySelector('.popup__price').innerHTML = object.offer.price + ' &#x20bd;/ночь';
     adElement.querySelector('h4').textContent = TYPE_OF_DWELLING[object.offer.type];
     paragraphs[2].textContent = object.offer.rooms + ' для ' + object.offer.guests + ' гостей';
-    paragraphs[3].textContent = 'Заезд после' + object.offer.checkin + ',' + ' выезд до ' + object.offer.checkout;
+    paragraphs[3].textContent = 'Заезд после ' + object.offer.checkin + ',' + ' выезд до ' + object.offer.checkout;
     paragraphs[4].textContent = object.offer.description;
     adElement.querySelector('.popup__avatar').src = object.author.avatar;
     createFeaturesElement(object.offer.features, popupFeatures);

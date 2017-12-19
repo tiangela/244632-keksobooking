@@ -1,6 +1,7 @@
 'use strict';
 (function () {
   var KEY_ESC = 27;
+  var PIN_Y_SHIFT = 55;
   var map = document.querySelector('.map');
   var pinMain = map.querySelector('.map__pin--main');
   var notice = document.querySelector('.notice');
@@ -26,7 +27,7 @@
     return coords;
   };
 
-  var onRender = function (data) {
+  var onPinsRender = function (data) {
     window.offers = data;
     window.offers.forEach(function (offer, index) {
       offer.id = index;
@@ -50,7 +51,9 @@
   };
 
   var onPinMouseup = function () {
-    window.backend.load(onRender, window.backend.onError);
+    var coordsPinMain = getInitialCoordsPinMain();
+    window.form.setAddress(coordsPinMain);
+    window.backend.load(onPinsRender, window.backend.onError);
     pinMain.removeEventListener('mouseup', onPinMouseup);
   };
 
@@ -64,11 +67,11 @@
     closeBtn.addEventListener('click', onCloseClick);
   };
 
-  var onMainPinClick = function () {
+/*  var onMainPinClick = function () {
     var coordsPinMain = getInitialCoordsPinMain();
     window.form.setAddress(coordsPinMain);
   };
-  pinMain.addEventListener('click', onMainPinClick);
+  pinMain.addEventListener('click', onMainPinClick);*/
 
   var onButtonClose = function (event) {
     if (event.keyCode === KEY_ESC) {
@@ -100,7 +103,7 @@
       };
 
       var nextY = pinMain.offsetTop - shift.y;
-      if (nextY >= 100 && nextY <= 500) {
+      if (nextY >= 100 - PIN_Y_SHIFT && nextY <= 500 - PIN_Y_SHIFT) {
         startCoords = {
           x: moveEvt.clientX,
           y: moveEvt.clientY
@@ -112,8 +115,8 @@
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      var coordX = parseInt(pinMain.style.left, 10);
-      var coordY = parseInt(pinMain.style.top + window.pin.mainSize / 2 + 22, 10);
+      var coordX = pinMain.offsetTop;
+      var coordY = pinMain.offsetTop + PIN_Y_SHIFT;
       window.form.setAddress('x: ' + coordX + ',' + ' y: ' + coordY);
 
       document.removeEventListener('mousemove', onMouseMove);
@@ -125,7 +128,5 @@
   };
 
   pinMain.addEventListener('mouseup', onPinMouseup);
-  window.map = {
-    pins: onRender
-  };
+
 })();

@@ -4,6 +4,7 @@
   var PIN_SIZE = 46;
   var MAIN_PIN_SIZE = 62;
   var PIN_TAIL = 18;
+  var MAIN_PIN_TAIL = 22;
 
   var drawButton = function (pin) {
     var buttonMap = document.createElement('button');
@@ -34,6 +35,7 @@
     active: activePin,
     size: PIN_SIZE,
     mainSize: MAIN_PIN_SIZE,
+    mainTile: MAIN_PIN_TAIL,
     activate: activate,
     deactivate: deactivate,
     drawButton: drawButton

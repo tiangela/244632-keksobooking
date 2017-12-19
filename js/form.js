@@ -82,13 +82,22 @@
     setRooms();
   };
   // работы с сервером
-  form.addEventListener('submit', function (evt) { // ПЕРЕДЕЛАТЬ!
+  var onFormSubmit = function (evt) {
     evt.preventDefault();
     window.backend.save(new FormData(form), function () {
       form.reset();
       setRooms(roomNumber.value);
     }, window.backend.onError);
-  });
+  };
+  form.addEventListener('submit', onFormSubmit);
+
+/*  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), function () {
+      form.reset();
+      setRooms(roomNumber.value);
+    }, window.backend.onError);
+  });*/
 
   setMinPrice(typeElement.value);
   setRooms(roomNumber.value);

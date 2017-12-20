@@ -13,7 +13,7 @@
   };
   var timeIn = document.querySelector('#timein');
   var timeOut = document.querySelector('#timeout');
-  var typeElement = document.querySelector('#type');
+  var type = document.querySelector('#type');
   var address = document.querySelector('#address');
   var titleForm = document.querySelector('#title');
   var price = document.querySelector('#price');
@@ -88,23 +88,15 @@
       form.reset();
       setRooms(roomNumber.value);
     }, window.backend.onError);
-  };
-  form.addEventListener('submit', onFormSubmit);
+  }
 
-/*  form.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    window.backend.save(new FormData(form), function () {
-      form.reset();
-      setRooms(roomNumber.value);
-    }, window.backend.onError);
-  });*/
-
-  setMinPrice(typeElement.value);
+  setMinPrice(type.value);
   setRooms(roomNumber.value);
   roomNumber.addEventListener('change', onRoomChange);
   buttonSubmit.addEventListener('click', onButtonError);
+  form.addEventListener('submit', onFormSubmit);
   window.synchronizeFields(roomNumber, capacity, ROOMS, GUESTS, syncValues);
-  window.synchronizeFields(typeElement, price, TYPES, MIN_PRICES, syncMinPrice);
+  window.synchronizeFields(type, price, TYPES, MIN_PRICES, syncMinPrice);
   window.synchronizeFields(timeIn, timeOut, TIMES, TIMES, syncValues);
   window.synchronizeFields(timeOut, timeIn, TIMES, TIMES, syncValues);
 

@@ -67,12 +67,6 @@
     closeBtn.addEventListener('click', onCloseClick);
   };
 
-/*  var onMainPinClick = function () {
-    var coordsPinMain = getInitialCoordsPinMain();
-    window.form.setAddress(coordsPinMain);
-  };
-  pinMain.addEventListener('click', onMainPinClick);*/
-
   var onButtonClose = function (event) {
     if (event.keyCode === KEY_ESC) {
       window.pin.deactivate();
@@ -115,7 +109,7 @@
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      var coordX = pinMain.offsetTop;
+      var coordX = pinMain.offsetLeft;
       var coordY = pinMain.offsetTop + PIN_Y_SHIFT;
       window.form.setAddress('x: ' + coordX + ',' + ' y: ' + coordY);
 

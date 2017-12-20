@@ -9,7 +9,7 @@
   var housingPrice = filters.querySelector('#housing-price');
   var housingRooms = filters.querySelector('#housing-rooms');
   var housingGuests = filters.querySelector('#housing-guests');
-  var housingFeaturesCollection = filters.querySelectorAll('.feature input[type="checkbox"]');
+  var housingFeaturesCollection = filters.querySelectorAll('.features input[type="checkbox"]');
   var housingFeaturesArray = Array.prototype.slice.call(housingFeaturesCollection, 0);
   var filteredPins;
 

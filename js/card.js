@@ -8,6 +8,7 @@
     'house': 'Дом',
     'bungalo': 'Бунгало'
   };
+
   var createFeaturesElement = function (facility, popupFeatures) {
     var fragment = document.createDocumentFragment();
     popupFeatures.innerHTML = '';

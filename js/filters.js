@@ -81,7 +81,7 @@
     hideAllPins(filteredPins);
 
     // И скрываем блок с объявлением
-    window.card.closePopup();
+    window.card.close();
 
     // Фильтруем массив с пинами, пин объявления, которое не подходит, не попадает в filteredPins
     filteredPins = filteredPins.filter(filterByProperty(housingType, 'type'));

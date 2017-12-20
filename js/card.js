@@ -1,13 +1,13 @@
 'use strict';
 
 (function () {
-  var closeBtn = null;
-  var currentPopup = null;
   var TYPE_OF_DWELLING = {
     'flat': 'Квартира',
     'house': 'Дом',
     'bungalo': 'Бунгало'
   };
+  var closeBtn = null;
+  var currentPopup = null;
 
   var createFeaturesElement = function (facility, popupFeatures) {
     var fragment = document.createDocumentFragment();
@@ -81,7 +81,7 @@
     getCloseBtn: getCloseBtn,
     createFeaturesElement: createFeaturesElement,
     createPopup: createPopup,
-    closePopup: closePopup,
+    close: closePopup,
 
   };
 })();

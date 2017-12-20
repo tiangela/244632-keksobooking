@@ -8,7 +8,6 @@
   var fieldset = document.querySelectorAll('fieldset');
   var blockPins = document.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
-  window.offers = null;
 
   var fillMap = function (data) {
     for (var i = 0; i < data.length; i++) {
@@ -70,14 +69,14 @@
   var onButtonClose = function (event) {
     if (event.keyCode === KEY_ESC) {
       window.pin.deactivate();
-      window.card.closePopup(map);
+      window.card.close(map);
       document.removeEventListener('keydown', onButtonClose);
     }
   };
 
   var onCloseClick = function () {
     window.pin.deactivate();
-    window.card.closePopup(map);
+    window.card.close(map);
     document.removeEventListener('keydown', onButtonClose);
   };
 
@@ -123,4 +122,7 @@
 
   pinMain.addEventListener('mouseup', onPinMouseup);
 
+  window.map = {
+    getCoordsPinMain: getInitialCoordsPinMain
+  };
 })();

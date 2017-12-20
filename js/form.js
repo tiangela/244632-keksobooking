@@ -60,6 +60,10 @@
     address.value = value;
   };
 
+  var setCoords = function () {
+    address.value = window.map.getCoordsPinMain();
+  };
+
   var onButtonError = function () {
     if (titleForm.validity.valueMissing) {
       titleForm.style.border = '2px solid red';
@@ -87,8 +91,10 @@
     window.backend.save(new FormData(form), function () {
       form.reset();
       setRooms(roomNumber.value);
+      window.card.close();
+      setCoords();
     }, window.backend.onError);
-  }
+  };
 
   setMinPrice(type.value);
   setRooms(roomNumber.value);

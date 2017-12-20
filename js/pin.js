@@ -1,10 +1,11 @@
 'use strict';
 (function () {
-  var activePin = null;
+
   var PIN_SIZE = 46;
   var MAIN_PIN_SIZE = 62;
   var PIN_TAIL = 18;
   var MAIN_PIN_TAIL = 22;
+  var activePin = null;
 
   var drawButton = function (pin) {
     var buttonMap = document.createElement('button');

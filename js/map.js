@@ -2,6 +2,10 @@
 (function () {
   var KEY_ESC = 27;
   var PIN_Y_SHIFT = 55;
+  var MAX_PIN = 4;
+  var MIN_COORD_Y = 100;
+  var MAX_COORD_Y = 500;
+
   var map = document.querySelector('.map');
   var pinMain = map.querySelector('.map__pin--main');
   var notice = document.querySelector('.notice');
@@ -13,7 +17,7 @@
     for (var i = 0; i < data.length; i++) {
       var drawPin = window.pin.drawButton(data[i]);
       fragment.appendChild(drawPin);
-      if (i > 4) {
+      if (i > MAX_PIN) {
         drawPin.classList.add('hidden');
       }
     }
@@ -96,7 +100,7 @@
       };
 
       var nextY = pinMain.offsetTop - shift.y;
-      if (nextY >= 100 - PIN_Y_SHIFT && nextY <= 500 - PIN_Y_SHIFT) {
+      if (nextY >= MIN_COORD_Y - PIN_Y_SHIFT && nextY <= MAX_COORD_Y - PIN_Y_SHIFT) {
         startCoords = {
           x: moveEvt.clientX,
           y: moveEvt.clientY

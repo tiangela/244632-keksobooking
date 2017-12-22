@@ -33,9 +33,8 @@
 
       if (filterSelect.value === 'any' || filterSelect.value === (window.offers[id].offer[property] + '')) {
         return true;
-      } else {
-        return false;
       }
+      return false;
     };
   };
 

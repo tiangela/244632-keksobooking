@@ -2,6 +2,9 @@
 (function () {
   var SERVER_URL = 'https://1510.dump.academy/keksobooking';
   var SET_TIME = 4000;
+  var STATUS_OK = 200;
+  var TIMEOUT = 10000;
+
   var onMessageError = function (errorMessage) {
     var node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background: -webkit-linear-gradient(97deg, rgb(222, 233, 243), rgb(32, 44, 122)); background: linear-gradient(97deg, rgb(222, 233, 243), rgb(32, 44, 122))';
@@ -21,7 +24,7 @@
     onError = onMessageError;
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === STATUS_OK) {
         onLoad(xhr.response);
       } else {
         onError('Произошла ошибка соединения!' + ' (>﹏<)');
@@ -31,7 +34,7 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс!' + '  (ᵔ.ᵔ)');
     });
 
-    xhr.timeout = 10000; // 10s
+    xhr.timeout = TIMEOUT; // 10s
 
     return xhr;
   };

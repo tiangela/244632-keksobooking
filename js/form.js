@@ -28,21 +28,21 @@
   };
 
   var setRooms = function () {
-    var roomValue = roomNumber.value;
+    var roomNumberValue = roomNumber.value;
     for (var i = 0; i < capacity.options.length; i++) {
       capacity.options[i].hidden = false;
     }
-    if (roomValue === '1') {
+    if (roomNumberValue === '1') {
       capacity.value = '1';
       capacity.options[0].hidden = true;
       capacity.options[1].hidden = true;
       capacity.options[3].hidden = true;
-    } else if (roomValue === '2') {
+    } else if (roomNumberValue === '2') {
       capacity.options[0].hidden = true;
       capacity.options[3].hidden = true;
-    } else if (roomValue === '3') {
+    } else if (roomNumberValue === '3') {
       capacity.options[3].hidden = true;
-    } else if (roomValue === '100') {
+    } else if (roomNumberValue === '100') {
       capacity.options[0].hidden = true;
       capacity.options[1].hidden = true;
       capacity.options[2].hidden = true;
